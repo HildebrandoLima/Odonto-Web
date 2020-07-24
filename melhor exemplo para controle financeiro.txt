@@ -1,0 +1,29 @@
+tabela status
+valor: 4 * 70 = 280
+total: 280,00
+
+SELECT SUM(valor) AS total FROM status WHERE consultorio = 'Dra Natecia Alves';
+
+tabela: custos_fixos
+valor_despesa: 700 + 75 + 70 + 2 * 1045 = 2935,00
+
+SELECT SUM(valor_custo_fixo) AS total FROM custos_fixos WHERE consultorio = 'Dra Natecia Alves';
+
+tabela: custos_diretos
+quantidade * valor_equipamento = total
+5 * 65,00 = 325,00
+2 * 02,00 =  04,00
+3 * 02,00 =  06,00
+2 * 33,00 =  66,00
+valor_total: 401,00
+
+SELECT SUM((quantidade * valor_custo_direto)) AS total FROM custos_diretos WHERE consultorio = 'Dra Natecia Alves';
+
+tabela demonstracao_lucro
+((2935,00 + 401,00) - 280,00) = 3056
+
+
+
+calculo => demonstracao_lucro == ((custos_fixos + custos_diretos + despesas) - total) = valor_total
+
+SELECT SUM(total_custos_fixos + total_custos_diretos) - total_consultas AS total FROM demonstracao_lucro WHERE consultorio = 'Dra Natecia Alves';
