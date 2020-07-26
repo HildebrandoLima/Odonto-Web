@@ -96,6 +96,7 @@
             <h6 class="dropdown-header"> Registrar: </h6>
             <a class="dropdown-item" href="registrar-usuario.php"> Registrar Usuário </a>
 			<a class="dropdown-item" href="registrar-consulta.php"> Registrar Consulta </a>
+			<a class="dropdown-item" href="registrar-modalidade.php"> Registrar Modalidade </a>
           </div>
         </li>
 		<li class="nav-item dropdown">

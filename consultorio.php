@@ -24,7 +24,7 @@
 				<label for="busca" id="busca"> Selecione a Data </label>
 				<option value="busca"> Selecione a Data </option>
 				<?php
-					$listarDados = mysqli_query($conn, "SELECT DISTINCT data_marcada FROM consulta WHERE consultorio = '$_SESSION[usuarioNome]'");
+					$listarDados = mysqli_query($conn, "SELECT DISTINCT data_marcada FROM consultas WHERE consultorio = '$_SESSION[usuarioNome]'");
 					while($escrever = mysqli_fetch_array($listarDados)){
 					echo '<option value="' . $escrever['data_marcada'] . '"> ' . $escrever['data_marcada'] . ' </option>';}
 				?>
@@ -48,7 +48,7 @@
 				//	Nesse for terá um loop para cada palavra no banco de bados.
 				for($i = 0; $i < $quant; $i++){
 					$pesquisa = $busca_divida[$i];
-					$sql = mysqli_query($conn, "SELECT * FROM consulta WHERE data_marcada LIKE '%$busca%' AND consultorio = '$_SESSION[usuarioNome]'");
+					$sql = mysqli_query($conn, "SELECT * FROM consultas WHERE data_marcada LIKE '%$busca%' AND consultorio = '$_SESSION[usuarioNome]'");
 
 					//	Vai contar quantas linhas a variável sql puxou.
 					$quant_campos = mysqli_num_rows($sql);
@@ -81,7 +81,7 @@
 					$consultorio = $linha['consultorio'];
 					$nome = $linha['nome'];
 					$data_marcada = $linha['data_marcada'];
-					$valor = $linha['valor'];
+					$valor_servico = $linha['valor_servico'];
 					$consulta_id = $linha['consulta_id'];
 
 				//	Se retorna verdade ele mostra, caso contrário não mostra.
@@ -93,7 +93,7 @@
 					  <input type="checkbox" name="nome" value="<?php echo $nome; ?>" checked /> <?php echo $nome;?></td>
                       <td><input type="checkbox" name="data_marcada" value="<?php echo $data_marcada; ?>" checked /> <?php echo date("d/m/Y", strtotime($data_marcada)); ?></td>
 					  <td><select name="pagamento" class="form-control"><option value="Dinheiro"> Dinheiro </option><option value="Cartão"> Cartão </option><option value="Nullo"> Nullo </option></select>
-					  <input type="hidden" name="valor" value="<?php echo $valor; ?>"><input type="hidden" name="entrada" value="N"></td>
+					  <input type="hidden" name="valor" value="<?php echo $valor_servico; ?>"><input type="hidden" name="entrada" value="N"></td>
 					  <td><select name="status" class="form-control"><option value="Presente"> Presente </option><option value="Ausente"> Ausente </option></select></td>
                       <td><input type="hidden" name="acao" value="enviado" />
 					  <!-- <input type="image" src="img/visto.jpg" width="20" height="20" value="Confirmar" title="Confirmar" class="botao"> -->
@@ -110,7 +110,7 @@
                   </tbody>
 			<?php array_push($id_mostrado, $consulta_id);
 			}}
-			$contarDados = mysqli_query($conn, "SELECT COUNT(*) AS data_marcada FROM consulta WHERE data_marcada LIKE '%$busca%' AND consultorio = '$_SESSION[usuarioNome]'");
+			$contarDados = mysqli_query($conn, "SELECT COUNT(*) AS data_marcada FROM consultas WHERE data_marcada LIKE '%$busca%' AND consultorio = '$_SESSION[usuarioNome]'");
 			$escrever = mysqli_fetch_array($contarDados);
 			echo '<center><strong><font color="red"> Resultado da busca ' . date("d/m/Y", strtotime($busca)) . '! Total de Pessoas Marcadas para esta Data: ' . $escrever['data_marcada'] . '</font></strong></center>';
 			}//else
@@ -143,15 +143,15 @@
 				   $qnt_result_pg = 3;
 				  //	CALCULAR O INICIO VISUALIZAÇÃO
 				  $inicio = ($qnt_result_pg * $pagina) - $qnt_result_pg;
-				  $listarDados = mysqli_query($conn, "SELECT * FROM consulta WHERE consultorio = '$_SESSION[usuarioNome]' LIMIT $inicio, $qnt_result_pg");
+				  $listarDados = mysqli_query($conn, "SELECT * FROM consultas WHERE consultorio = '$_SESSION[usuarioNome]' LIMIT $inicio, $qnt_result_pg");
 				  while($escrever = mysqli_fetch_array($listarDados)){?>
 				  <tbody>
                     <tr>
-                      <td><form action="consultorio.php" method="POST" enctype="multipart/form-data"><input type="hidden" name="consultorio" value="<?php echo $escrever['consultorio']; ?>">
+                      <td><form action="consultorio.php" method="POST"><input type="hidden" name="consultorio" value="<?php echo $escrever['consultorio']; ?>">
 					  <input type="checkbox" name="nome" value="<?php echo $escrever['nome']; ?>" checked /> <?php echo $escrever['nome']; ?></td>
                       <td><input type="checkbox" name="data_marcada" value="<?php echo $escrever['data_marcada']; ?>" checked /> <?php echo date("d/m/Y", strtotime($escrever['data_marcada'])); ?></td>
 					  <td><select name="pagamento" class="form-control"><option value="Dinheiro"> Dinheiro </option><option value="Cartão"> Cartão </option><option value="Nullo"> Nullo </option></select>
-					  <input type="hidden" name="valor" value="<?php echo $escrever['valor']; ?>"><input type="hidden" name="entrada" value="N"></td>
+					  <input type="hidden" name="valor_servico" value="<?php echo $escrever['valor_servico']; ?>"><input type="hidden" name="entrada" value="N"></td>
 					  <td><select name="status" class="form-control"><option value="Presente"> Presente </option><option value="Ausente"> Ausente </option></select></td>
                       <td><input type="hidden" name="acao" value="enviado" />
 					  <!-- <input type="image" src="img/visto.jpg" width="20" height="20" value="Confirmar" title="Confirmar" class="botao"> -->
@@ -188,7 +188,7 @@
 
 					<?php } // Fim do While que lista a tabela de consultas.
 					  //	PAGINAÇÃO - SOMAR A QUANTIDADE DE PATOLOGIAS
-					  $result_pg = "SELECT COUNT(consulta_id) AS num_result FROM consulta WHERE consultorio = '$_SESSION[usuarioNome]'";
+					  $result_pg = "SELECT COUNT(consulta_id) AS num_result FROM consultas WHERE consultorio = '$_SESSION[usuarioNome]'";
 					  $resultado_pg = mysqli_query($conn, $result_pg);
 					  $row_pg = mysqli_fetch_assoc($resultado_pg);
 					  //	echo $row_pg['num_result'];
@@ -214,12 +214,12 @@
 
 				  //	Esse código irá inserir os dados escolhidos pelo admin
 				  if(isset($_POST['consultorio'])){
-					if($_POST['status'] == 'Presente'){
+				  if($_POST['status'] == 'Presente'){
 				  $consultorio = $_POST['consultorio'];
 				  $nome = $_POST['nome'];
 				  $data_marcada = $_POST['data_marcada'];
 				  $pagamento = $_POST['pagamento'];
-				  $valor = $_POST['valor'];
+				  $valor_servico = $_POST['valor_servico'];
 				  $entrada = $_POST['entrada'];
 				  $status = $_POST['status'];
 
@@ -229,7 +229,8 @@
 				  if($verifica){
 					$busca = mysqli_num_rows($verifica);
 				  if(($busca) == '0'){
-					$insereDados = mysqli_query($conn, "INSERT INTO status (consultorio , nome , data_marcada , pagamento , valor , entrada , status , data_entrada) VALUES ('$consultorio' , '$nome' , '$data_marcada' , '$pagamento' , '$valor' , '$entrada' , '$status' , NOW())");  
+					$insereDados = mysqli_query($conn, "INSERT INTO status (consultorio , nome , data_marcada , pagamento , valor_servico , entrada , status)
+					VALUES ('$consultorio' , '$nome' , '$data_marcada' , '$pagamento' , '$valor_servico' , '$entrada' , '$status')");  
 					echo "<script> alert('Informações enviadas com sucesso.'); window.location='consultorio.php'</script>";
 				  }else{
 					echo "<script> alert('Dado repedito. Não é permitido fazer a mesma transferência.'); window.location='consultorio.php'</script>";				  
@@ -241,7 +242,7 @@
 					  $nome = $_POST['nome'];
 					  $data_marcada = $_POST['data_marcada'];
 					  $pagamento = $_POST['pagamento'];
-					  $valor = "00,00";
+					  $valor_servico = "00,00";
 					  $entrada = $_POST['entrada'];
 					  $status = $_POST['status'];
 
@@ -251,7 +252,8 @@
 					  if($verifica){
 						$busca = mysqli_num_rows($verifica);
 					  if(($busca) == '0'){
-						$insereDados = mysqli_query($conn, "INSERT INTO status (consultorio , nome , data_marcada , pagamento , valor , entrada , status , data_entrada) VALUES ('$consultorio' , '$nome' , '$data_marcada' , '$pagamento' , '$valor' , '$entrada' , '$status' , NOW())");  
+						$insereDados = mysqli_query($conn, "INSERT INTO status (consultorio , nome , data_marcada , pagamento , valor_servico , entrada , status)
+						VALUES ('$consultorio' , '$nome' , '$data_marcada' , '$pagamento' , '$valor_servico' , '$entrada' , '$status')");  
 						echo "<script> alert('Informações enviadas com sucesso.'); window.location='consultorio.php'</script>";
 					  }else{
 						echo "<script> alert('Dado repedito. Não é permitido fazer a mesma transferência.'); window.location='consultorio.php'</script>";				  

@@ -30,7 +30,7 @@
 				  <?php
 					$contarDados = mysqli_query($conn, "SELECT COUNT(*) AS status_id FROM status WHERE pagamento != 'Nullo' AND consultorio = '$_SESSION[usuarioNome]'");
 					while($escrever = mysqli_fetch_array($contarDados)){ ?>
-					Ao Todo Foram <span class="badge badge-danger"><?php echo $escrever['status_id']; ?></span> Vendas Realizadas <?php } ?>
+					Ao Todo <span class="badge badge-danger"><?php echo $escrever['status_id']; ?></span> Vendas Realizadas Neste Mês <?php } ?>
 				  </div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="#" role="button" aria-haspopup="true" aria-expanded="false" data-toggle="modal" data-target="#detalheModal">
@@ -51,7 +51,7 @@
 				  <?php
 					$contarDados = mysqli_query($conn, "SELECT COUNT(*) AS status_id FROM status WHERE pagamento = 'Dinheiro' AND consultorio = '$_SESSION[usuarioNome]'");
 					while($escrever = mysqli_fetch_array($contarDados)){ ?>
-					Ao Todo <span class="badge badge-success"><?php echo $escrever['status_id']; ?></span> Vendas em Dinheiro <?php } ?>
+					Ao Todo <span class="badge badge-success"><?php echo $escrever['status_id']; ?></span> Vendas em Dinheiro Neste Mês <?php } ?>
 				  </div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="#" role="button" aria-haspopup="true" aria-expanded="false" data-toggle="modal" data-target="#detalheModal">
@@ -72,7 +72,7 @@
 				  <?php
 					$contarDados = mysqli_query($conn, "SELECT COUNT(*) AS status_id FROM status WHERE pagamento = 'Cartão' AND consultorio = '$_SESSION[usuarioNome]'");
 					while($escrever = mysqli_fetch_array($contarDados)){ ?>
-					Ao Todo <span class="badge badge-warning text-white"><?php echo $escrever['status_id']; ?></span> Vendas em Cartão Aprovadas <?php } ?>
+					Ao Todo <span class="badge badge-warning text-white"><?php echo $escrever['status_id']; ?></span> Vendas em Cartão Aprovadas Neste Mês <?php } ?>
 				  </div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="#" role="button" aria-haspopup="true" aria-expanded="false" data-toggle="modal" data-target="#detalheModal">
@@ -93,7 +93,7 @@
 				   <?php
 					$contarDados = mysqli_query($conn, "SELECT COUNT(*) AS status_id FROM status WHERE pagamento = 'Cartão' AND entrada = 'N' AND consultorio = '$_SESSION[usuarioNome]'");
 					while($escrever = mysqli_fetch_array($contarDados)){ ?>
-					Ao Todo <span class="badge badge-primary"><?php echo $escrever['status_id']; ?></span> Vendas em Cartão Não Aprovadas <?php } ?>
+					Ao Todo <span class="badge badge-primary"><?php echo $escrever['status_id']; ?></span> Vendas em Cartão Não Aprovadas Neste Mês <?php } ?>
 				  </div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="#" role="button" aria-haspopup="true" aria-expanded="false" data-toggle="modal" data-target="#detalheModal">
@@ -122,24 +122,24 @@
           <div class="modal-body">
 		  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 		  <?php //	Margem total de lucro
-			$contarVendas = mysqli_query($conn, "SELECT SUM(valor) FROM status WHERE consultorio = '$_SESSION[usuarioNome]'");
+			$contarVendas = mysqli_query($conn, "SELECT SUM(valor_servico) FROM status WHERE consultorio = '$_SESSION[usuarioNome]'");
 			while($escrever = mysqli_fetch_array($contarVendas)){ ?>
-			<tr><td> Margem  de Lucro Total: <span class="badge badge-danger">R$<?php echo $escrever['SUM(valor)']; ?></span>. Sem incluir despesas </td> <?php } ?>
+			<tr><td> Margem  de Lucro Total: <span class="badge badge-success"> R$ <?php echo $escrever['SUM(valor_servico)']; ?></span>. Sem incluir custos. </td> <?php } ?>
 
 			<?php //	Total de vendas em dinheiro
-			$contarVendasdinheiro = mysqli_query($conn, "SELECT SUM(valor) FROM status WHERE pagamento = 'Dinheiro' AND consultorio = '$_SESSION[usuarioNome]'");
+			$contarVendasdinheiro = mysqli_query($conn, "SELECT SUM(valor_servico) FROM status WHERE pagamento = 'Dinheiro' AND consultorio = '$_SESSION[usuarioNome]'");
 			while($escrever = mysqli_fetch_array($contarVendasdinheiro)){ ?>
-			<td> Total de Vendas em Dinheiro: <span class="badge badge-danger">R$<?php echo $escrever['SUM(valor)']; ?></span></td></tr> <?php } ?>
+			<td> Total de Vendas em Dinheiro: <span class="badge badge-success"> R$ <?php echo $escrever['SUM(valor_servico)']; ?></span>. </td></tr> <?php } ?>
 
 			<?php //	Total de vendas em cartão (Aprovado)
-			$contarVendascartao = mysqli_query($conn, "SELECT SUM(valor) FROM status WHERE pagamento = 'Cartão' AND consultorio = '$_SESSION[usuarioNome]'");
+			$contarVendascartao = mysqli_query($conn, "SELECT SUM(valor_servico) FROM status WHERE pagamento = 'Cartão' AND consultorio = '$_SESSION[usuarioNome]'");
 			while($escrever = mysqli_fetch_array($contarVendascartao)){ ?>
-			<tr><td> Total de Vendas em Cartão Aprovadas: <span class="badge badge-danger">R$<?php echo $escrever['SUM(valor)']; ?></span></td> <?php } ?>
+			<tr><td> Total de Vendas em Cartão Aprovadas: <span class="badge badge-success"> R$ <?php echo $escrever['SUM(valor_servico)']; ?></span>. </td> <?php } ?>
 
 			<?php //	Total de vendas e cartão (Não Aprovado)
-			$contarVendascartaona = mysqli_query($conn, "SELECT SUM(valor) FROM status WHERE pagamento = 'Cartão' AND entrada = 'N' AND consultorio = '$_SESSION[usuarioNome]'");
+			$contarVendascartaona = mysqli_query($conn, "SELECT SUM(valor_servico) FROM status WHERE pagamento = 'Cartão' AND entrada = 'N' AND consultorio = '$_SESSION[usuarioNome]'");
 			while($escrever = mysqli_fetch_array($contarVendascartaona)){ ?>
-			<td> Total de Vendas em Cartão ainda não Aprovadas: <span class="badge badge-danger">R$<?php echo $escrever['SUM(valor)']; ?></span></td></tr> <?php } ?>
+			<td> Total de Vendas em Cartão ainda não Aprovadas: <span class="badge badge-success"> R$ <?php echo $escrever['SUM(valor_servico)']; ?></span>. </td></tr> <?php } ?>
 		  </table>
 		  </div>
           <div class="modal-footer">

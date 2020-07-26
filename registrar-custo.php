@@ -23,7 +23,7 @@
 						  <div class="form-row">
 							<div class="col-md-6">
 							  <div class="form-label-group">
-							  <input type="text" id="Categoria" name="categoria" class="form-control" placeholder="Nome da Categoria" required="required">
+								<input type="text" id="Categoria" name="categoria" class="form-control" placeholder="Nome da Categoria" required="required">
 								<label for="Categoria"> Nome da Categoria </label>
 							  </div>
 							</div>

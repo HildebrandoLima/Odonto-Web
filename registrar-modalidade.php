@@ -45,9 +45,9 @@
   <body class="bg-dark">
     <div class="container">
       <div class="card card-register mx-auto mt-5">
-        <div class="card-header"> Registrar Consulta </div>
+        <div class="card-header"> Registrar Modalidade </div>
         <div class="card-body">
-          <form action="Enviarconsultadb.php" method="POST">
+          <form action="Enviarmodalidadedb.php" method="POST">
             <div class="form-group">
 			<div class="form-group">
 			<div class="form-label-group">
@@ -58,50 +58,20 @@
               <div class="form-row">
                 <div class="col-md-6">
                   <div class="form-label-group">
-				  <select name="nome" class="form-control" required="required" autofocus="autofocus">
-				    <label for="escolha" id="escolha"> Selecione o Nome </label>
-					<option value="escolha"> Selecione o Nome </option>
-				    <?php
-						$listarDados = mysqli_query($conn, "SELECT * FROM usuarios WHERE consultorio = '$_SESSION[usuarioNome]' AND niveis_acesso_id = '5' ORDER BY nome");
-						while($escrever = mysqli_fetch_array($listarDados)){
-						echo '<option value="' . $escrever['nome'] . '"> ' . $escrever['nome'] . ' </option>';}
-					?>
-				    </select>
+					<input type="text" id="Modalidade" name="modalidade" class="form-control" placeholder="Nome da Modalidade" required="required">
+                    <label for="Modalidade"> Nome da Modalidade </label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-label-group">
-                     <select name="modalidade" class="form-control" required="required" autofocus="autofocus">
-				    <label for="escolha" id="escolha"> Selecione a Modalidade </label>
-					<option value="escolha"> Selecione a Modalidade </option>
-				    <?php
-						$listarDados = mysqli_query($conn, "SELECT * FROM modalidades WHERE consultorio = '$_SESSION[usuarioNome]' ORDER BY modalidade");
-						while($escrever = mysqli_fetch_array($listarDados)){
-						echo '<option value="' . $escrever['modalidade'] . '"> ' . $escrever['modalidade'] . ' </option>';}
-					?>
-				    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-			 <div class="form-group">
-              <div class="form-row">
-                <div class="col-md-6">
-                  <div class="form-label-group">
-					<input type="date" id="date" name="data_marcada" class="form-control" placeholder="Data" required="required">
-                    <label for="data"> Data </label>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-label-group">
-					<input type="text" id="Valorservico" name="valor_servico" class="form-control" onKeyPress="return(MascaraMoeda(this,'.',',',event))" placeholder="R$ Valor Servico" required="required">
-					<label for="Valorservico"> R$ Valor Servico </label>
+                    <input type="text" id="Valormodalidade" name="valor_modalidade" class="form-control" onKeyPress="return(MascaraMoeda(this,'.',',',event))" placeholder="Valor da Modalidade" required="required">
+                    <label for="Valormodalidade"> Valor da Modalidade </label>
                   </div>
                 </div>
               </div>
             </div>
 			<input type="hidden" name="acao" value="enviado" />
-            <input type="submit" class="btn btn-primary btn-block" value="Marcar" />
+            <input type="submit" class="btn btn-primary btn-block" value="Enviar" />
           </form>
           <div class="text-center">
             <a class="d-block small mt-3" href="consultorio.php"> Voltar </a>
@@ -152,7 +122,7 @@
 		 }  
 		 return false;  
 	 }  
-	 </script>
+	</script>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -30,6 +30,31 @@
       <i class="fas fa-angle-up"></i>
     </a>
 
+    <!-- Controle Modal-->
+	<div class="modal fade" id="duvidasModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel"> ATENÇÃO! </h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true"> × </span>
+					</button>
+				</div>
+				<div class="modal-body">
+				<p style="color: #FF0000;"><b> Demonstração do Mês Vigente:</b> Mostra todos os valores referentes ao mês atual, ou seja, antes de serem contabilizados no sistema, pelo botão: "Enviar". </p>
+				<p style="color: #FF0000;"><b> Demonstração de todos os Mêses:</b> Mostra todos os valores já atualizados/completos referentes ao mês de sua escolha, ou seja, nesta tabela é possível editar (caso tenha algum valor que não bate na contabilidade manual) e remover (opcional), pelos ícones: "Lapís e lixeira". </p>
+				<p style="color: #FF0000;"><b> Receita Líquida (+):</b> Valor total acumulado no mês com as consultas contabilizadas pelo consultório. </p>
+				<p style="color: #FF0000;"><b> Custos Fixos (-):</b> Valor mensal gasto pelo consultório, tais como: água e energia, por exemplo. </p>
+				<p style="color: #FF0000;"><b> Custos Direitos (-):</b> Valor gasto com os equipamentos, tais como: manuntenção de aparelho, por exemplo. </p>
+				<p style="color: #FF0000;"><b> Demonstração de Lucro (=):</b> Margem de lucro do consultório no mês vigente. </p>
+				</div>
+				<div class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal"> Fechar </button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Infor Modal-->
     <div class="modal fade" id="inforModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -69,7 +94,7 @@
       </div>
     </div>
 
-	<!-- Mascará de Moeda -->
+	<!-- Mascará da Moeda -->
 	<script language="javascript">
 	 function MascaraMoeda(objTextBox, SeparadorMilesimo, SeparadorDecimal, e){  
 		 var sep = 0;  

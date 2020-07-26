@@ -55,7 +55,6 @@
                       <th> Forma de Pagamento </th>
                       <th> Status </th>
                       <th> Entrada </th>
-					  <th> Data Entrada </th>
                       <th> Entrada no Cartão </th>
 					</tr>
                   <tfoot>
@@ -65,7 +64,6 @@
                       <th> Forma de Pagamento </th>
                       <th> Status </th>
                       <th> Entrada </th>
-					  <th> Data Entrada </th>
                       <th> Entrada no Cartão </th>
                     </tr>
                   </tfoot>
@@ -77,7 +75,6 @@
 					$pagamento = $linha['pagamento'];
 					$entrada = $linha['entrada'];
 					$status = $linha['status'];
-					$data_entrada = $linha['data_entrada'];
 					$status_id = $linha['status_id'];
 
 				//	Se retorna verdade ele mostra, caso contrário não mostra.
@@ -91,7 +88,6 @@
 					  <?php if($status == "Presente"){ ?>
 					  <td><font color="green"><?php echo  $status; ?></font></td><?php }else{ ?><td><font color="red"><?php echo $status;?></font></td><?php } ?>
                       <td><?php echo $entrada; ?></td>
-					  <td><?php echo  $data_entrada; ?></td>
 					  <?php if($pagamento == 'Dinheiro' || $pagamento == 'Nullo' || $entrada == 'S'){ ?>
 					  <td><form action="Atualizarcartao.php?status_id=<?php echo $status_id; ?>" method="POST"><input type="hidden" name="status_id" value="<?php echo $status_id; ?>"><input type="hidden" name="entrada" value="S">
 					  <button class="btn btn-primary" type="submit" title="Entrada já Confirmada" disabled><svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
@@ -120,7 +116,6 @@
                       <th> Forma de Pagamento </th>
 					  <th> Status </th>
 					  <th> Entrada </th>
-					  <th> Data Entrada </th>
                       <th> Entrada no Cartão </th>
                     </tr>
                   <tfoot>
@@ -130,7 +125,6 @@
                       <th> Forma de Pagamento </th>
 					  <th> Status </th>
 					  <th> Entrada </th>
-					  <th> Data Entrada </th>
                       <th> Entrada no Cartão </th>
                     </tr>
                   </tfoot>
@@ -150,7 +144,6 @@
                       <td><?php echo $escrever['pagamento']; ?></td>
 					  <?php if($escrever['status'] == "Presente"){ ?><td><font color="green"><?php echo $escrever['status']; ?></font></td><?php }else{ ?><td><font color="red"><?php echo $escrever['status']; ?></font></td><?php } ?>
                       <td><?php echo $escrever['entrada']; ?></td>
-					  <td><?php echo $escrever['data_entrada']; ?></td>
 					  <?php if($escrever['pagamento'] == 'Dinheiro' || $escrever['pagamento'] == 'Nullo' || $escrever['entrada'] == 'S'){ ?>
 					  <td><form action="Atualizarcartao.php?status_id=<?php echo $escrever['status_id']; ?>" method="POST"><input type="hidden" name="status_id" value="<?php echo $escrever['status_id']; ?>"><input type="hidden" name="entrada" value="S">
 					  <button class="btn btn-primary" type="submit" title="Entrada já Confirmada" disabled><svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
