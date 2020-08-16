@@ -11,7 +11,7 @@
 				<label for="busca" id="busca"> Selecione o Nome </label>
 				<option value="busca"> Selecione o Nome </option>
 				<?php
-					$listarDados = mysqli_query($conn, "SELECT nome FROM status WHERE consultorio = '$_SESSION[usuarioNome]'");
+					$listarDados = mysqli_query($conn, "SELECT DISTINCT nome FROM status WHERE consultorio = '$_SESSION[usuarioNome]'");
 					while($escrever = mysqli_fetch_array($listarDados)){
 					echo '<option value="' . $escrever['nome'] . '"> ' . $escrever['nome'] . ' </option>';}
 				?>
@@ -52,7 +52,10 @@
 					<tr>
 					  <th> Data Marcada </th>
                       <th><font color="red"> Nome e Sobrenome </font></th>
+                      <th> Modalidade </th>
+                      <th> Valor </th>
                       <th> Forma de Pagamento </th>
+                      <th> Parcelas </th>
                       <th> Status </th>
                       <th> Entrada </th>
                       <th> Entrada no Cartão </th>
@@ -61,7 +64,10 @@
                     <tr>
 				 	  <th> Data Marcada </th>
                       <th><font color="red"> Nome e Sobrenome </font></th>
+                      <th> Modalidade </th>
+                      <th> Valor </th>
                       <th> Forma de Pagamento </th>
+                      <th> Parcelas </th>
                       <th> Status </th>
                       <th> Entrada </th>
                       <th> Entrada no Cartão </th>
@@ -72,7 +78,10 @@
 					//	Confere se o id já está no array/pesquisa, para não repeti a pesquisa no resultado.
 					$data_marcada = $linha['data_marcada'];
 					$nome = $linha['nome'];
+					$modalidade = $linha['modalidade'];
+					$valor_servico = $linha['valor_servico'];
 					$pagamento = $linha['pagamento'];
+					$parcelas = $linha['parcelas'];
 					$entrada = $linha['entrada'];
 					$status = $linha['status'];
 					$status_id = $linha['status_id'];
@@ -84,7 +93,10 @@
                     <tr>
 					  <td><?php echo date("d/m/Y", strtotime($data_marcada)); ?></td>
                       <td><?php echo $nome; ?></td>
+					  <td><?php echo $modalidade; ?></td>
+					  <td><?php echo $valor_servico; ?></td>
                       <td><?php echo $pagamento; ?></td>
+                      <td><?php echo $parcelas; ?></td>
 					  <?php if($status == "Presente"){ ?>
 					  <td><font color="green"><?php echo  $status; ?></font></td><?php }else{ ?><td><font color="red"><?php echo $status;?></font></td><?php } ?>
                       <td><?php echo $entrada; ?></td>
@@ -113,7 +125,10 @@
                     <tr>
 					  <th> Data Marcada </th>
                       <th> Nome e Sobrenome </th>
+                      <th> Modalidade </th>
+                      <th> Valor </th>
                       <th> Forma de Pagamento </th>
+                      <th> Parcelas </th>
 					  <th> Status </th>
 					  <th> Entrada </th>
                       <th> Entrada no Cartão </th>
@@ -122,7 +137,10 @@
                     <tr>
 				 	  <th> Data Marcada </th>
                       <th> Nome e Sobrenome </th>
+                      <th> Modalidade </th>
+                      <th> Valor </th>
                       <th> Forma de Pagamento </th>
+                      <th> Parcelas </th>
 					  <th> Status </th>
 					  <th> Entrada </th>
                       <th> Entrada no Cartão </th>
@@ -141,7 +159,10 @@
                     <tr>
 					  <td><?php echo date("d/m/Y", strtotime($escrever['data_marcada'])); ?></td>
                       <td><?php echo $escrever['nome']; ?></td>
+					  <td><?php echo $escrever['modalidade']; ?></td>
+					  <td><?php echo $escrever['valor_servico']; ?></td>
                       <td><?php echo $escrever['pagamento']; ?></td>
+                      <td><?php echo $escrever['parcelas']; ?></td>
 					  <?php if($escrever['status'] == "Presente"){ ?><td><font color="green"><?php echo $escrever['status']; ?></font></td><?php }else{ ?><td><font color="red"><?php echo $escrever['status']; ?></font></td><?php } ?>
                       <td><?php echo $escrever['entrada']; ?></td>
 					  <?php if($escrever['pagamento'] == 'Dinheiro' || $escrever['pagamento'] == 'Nullo' || $escrever['entrada'] == 'S'){ ?>

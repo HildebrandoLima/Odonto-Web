@@ -62,7 +62,9 @@
 					<tr>
 					  <th> Nome </th>
                       <th><font color="red"> Data Marcada </font></th>
+                      <th> Modalidade </th>
                       <th> Pagamento </th>
+                      <th> Parcelas </th>
                       <th> Status </th>
                       <th> Confirmar </th>
 					</tr>
@@ -70,7 +72,9 @@
                     <tr>
 					  <th> Nome </th>
                       <th><font color="red"> Data Marcada </font></th>
+                      <th> Modalidade </th>
                       <th> Pagamento </th>
+                      <th> Parcelas </th>
                       <th> Status </th>
                       <th> Confirmar </th>
                     </tr>
@@ -81,6 +85,7 @@
 					$consultorio = $linha['consultorio'];
 					$nome = $linha['nome'];
 					$data_marcada = $linha['data_marcada'];
+					$modalidade = $linha['modalidade'];
 					$valor_servico = $linha['valor_servico'];
 					$consulta_id = $linha['consulta_id'];
 
@@ -91,11 +96,19 @@
                     <tr>
                       <td><form action="consultorio.php" method="POST" enctype="multipart/form-data"><input type="hidden" name="consultorio" value="<?php echo $consultorio; ?>">
 					  <input type="checkbox" name="nome" value="<?php echo $nome; ?>" checked /> <?php echo $nome;?></td>
-                      <td><input type="checkbox" name="data_marcada" value="<?php echo $data_marcada; ?>" checked /> <?php echo date("d/m/Y", strtotime($data_marcada)); ?></td>
+                      
+					  <td><input type="checkbox" name="data_marcada" value="<?php echo $data_marcada; ?>" checked /> <?php echo date("d/m/Y", strtotime($data_marcada)); ?></td>
+					  
+					  <td><input type="text" name="modalidade" value="<?php echo $modalidade; ?>" class="form-control" size="05"></td>
+					  
 					  <td><select name="pagamento" class="form-control"><option value="Dinheiro"> Dinheiro </option><option value="Cartão"> Cartão </option><option value="Nullo"> Nullo </option></select>
-					  <input type="hidden" name="valor" value="<?php echo $valor_servico; ?>"><input type="hidden" name="entrada" value="N"></td>
+					  <input type="hidden" name="valor_servico" value="<?php echo $valor_servico; ?>"><input type="hidden" name="entrada" value="N"></td>
+					  
+					  <td><input type="text" name="parcelas" value="0" class="form-control" size="05"></td>
+					  
 					  <td><select name="status" class="form-control"><option value="Presente"> Presente </option><option value="Ausente"> Ausente </option></select></td>
-                      <td><input type="hidden" name="acao" value="enviado" />
+                      
+					  <td><input type="hidden" name="acao" value="enviado" />
 					  <!-- <input type="image" src="img/visto.jpg" width="20" height="20" value="Confirmar" title="Confirmar" class="botao"> -->
 					  <button class="btn btn-primary" type="submit"><svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor">
 					  <path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>
@@ -123,7 +136,9 @@
                     <tr>
                       <th> Nome </th>
 					  <th> Data Marcada </th>
+                      <th> Modalidade </th>
                       <th> Pagamento </th>
+                      <th> Parcelas </th>
 					  <th> Status </th>
                       <th> Confirmar </th>
                     </tr>
@@ -131,7 +146,9 @@
                     <tr>
                       <th> Nome </th>
                       <th> Data Marcada </th>
+                      <th> Modalidade </th>
                       <th> Pagamento </th>
+                      <th> Parcelas </th>
 					  <th> Status </th>
                       <th> Confirmar </th>
                     </tr>
@@ -143,18 +160,28 @@
 				   $qnt_result_pg = 3;
 				  //	CALCULAR O INICIO VISUALIZAÇÃO
 				  $inicio = ($qnt_result_pg * $pagina) - $qnt_result_pg;
-				  $listarDados = mysqli_query($conn, "SELECT * FROM consultas WHERE consultorio = '$_SESSION[usuarioNome]' LIMIT $inicio, $qnt_result_pg");
+				  $listarDados = mysqli_query($conn, "SELECT * FROM consultas WHERE consultorio = '$_SESSION[usuarioNome]' AND data_marcada = DATE(NOW()) LIMIT $inicio, $qnt_result_pg");
 				  while($escrever = mysqli_fetch_array($listarDados)){?>
 				  <tbody>
                     <tr>
                       <td><form action="consultorio.php" method="POST"><input type="hidden" name="consultorio" value="<?php echo $escrever['consultorio']; ?>">
+					  
 					  <input type="checkbox" name="nome" value="<?php echo $escrever['nome']; ?>" checked /> <?php echo $escrever['nome']; ?></td>
+					  
                       <td><input type="checkbox" name="data_marcada" value="<?php echo $escrever['data_marcada']; ?>" checked /> <?php echo date("d/m/Y", strtotime($escrever['data_marcada'])); ?></td>
+					  
+					  <td><input type="text" name="modalidade" value="<?php echo $escrever['modalidade']; ?>" class="form-control" size="05" /></td>
+					  
 					  <td><select name="pagamento" class="form-control"><option value="Dinheiro"> Dinheiro </option><option value="Cartão"> Cartão </option><option value="Nullo"> Nullo </option></select>
 					  <input type="hidden" name="valor_servico" value="<?php echo $escrever['valor_servico']; ?>"><input type="hidden" name="entrada" value="N"></td>
+					  
+					  <td><input type="text" name="parcelas" value="0" class="form-control" size="05" /></td>
+					  
 					  <td><select name="status" class="form-control"><option value="Presente"> Presente </option><option value="Ausente"> Ausente </option></select></td>
-                      <td><input type="hidden" name="acao" value="enviado" />
+                      
+					  <td><input type="hidden" name="acao" value="enviado" />
 					  <!-- <input type="image" src="img/visto.jpg" width="20" height="20" value="Confirmar" title="Confirmar" class="botao"> -->
+					  
 					  <button class="btn btn-primary" type="submit"><svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor">
 					  <path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>
 					  </svg></button>
@@ -172,12 +199,12 @@
 					  <div class="modal-dialog" role="document">
 						<div class="modal-content">
 						  <div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel"> Tem certeza que você deseja Cancelar Plano de <?php echo $escrever['nome']; ?>? </h5>
+							<h5 class="modal-title" id="exampleModalLabel"> Atualizar Dados de <?php echo $escrever['nome']; ?>? </h5>
 							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
 							  <span aria-hidden="true"> × </span>
 							</button>
 						  </div>
-						  <div class="modal-body"> Selecione "Sim" para cancelar plano ou "Não" caso tenha clicado por engano. </div>
+						  <div class="modal-body"> Selecione "Sim" para atualizar ou "Não" caso tenha clicado por engano. </div>
 						  <div class="modal-footer">
 							<button class="btn btn-secondary" type="button" data-dismiss="modal"> Não </button>
 							<a class="btn btn-primary" href="consultorio.php?consulta_id=<?php echo $escrever['consulta_id']; ?>"> Sim </a>
@@ -218,7 +245,9 @@
 				  $consultorio = $_POST['consultorio'];
 				  $nome = $_POST['nome'];
 				  $data_marcada = $_POST['data_marcada'];
+				  $modalidade = $_POST['modalidade'];
 				  $pagamento = $_POST['pagamento'];
+				  $parcelas = $_POST['parcelas'];
 				  $valor_servico = $_POST['valor_servico'];
 				  $entrada = $_POST['entrada'];
 				  $status = $_POST['status'];
@@ -229,9 +258,9 @@
 				  if($verifica){
 					$busca = mysqli_num_rows($verifica);
 				  if(($busca) == '0'){
-					$insereDados = mysqli_query($conn, "INSERT INTO status (consultorio , nome , data_marcada , pagamento , valor_servico , entrada , status)
-					VALUES ('$consultorio' , '$nome' , '$data_marcada' , '$pagamento' , '$valor_servico' , '$entrada' , '$status')");  
-					echo "<script> alert('Informações enviadas com sucesso.'); window.location='consultorio.php'</script>";
+					$insereDados = mysqli_query($conn, "INSERT INTO status (consultorio , nome , data_marcada , modalidade , pagamento , parcelas , valor_servico , entrada , status)
+					VALUES ('$consultorio' , '$nome' , '$data_marcada' , '$modalidade' , '$pagamento' , '$parcelas' , '$valor_servico' , '$entrada' , '$status')");  
+					//echo "<script> alert('Informações enviadas com sucesso.'); window.location='consultorio.php'</script>";
 				  }else{
 					echo "<script> alert('Dado repedito. Não é permitido fazer a mesma transferência.'); window.location='consultorio.php'</script>";				  
 				  }
@@ -241,7 +270,9 @@
 					  $consultorio = $_POST['consultorio'];
 					  $nome = $_POST['nome'];
 					  $data_marcada = $_POST['data_marcada'];
+					  $modalidade = $_POST['modalidade'];
 					  $pagamento = $_POST['pagamento'];
+					  $parcelas = $_POST['parcelas'];
 					  $valor_servico = "00,00";
 					  $entrada = $_POST['entrada'];
 					  $status = $_POST['status'];
@@ -252,9 +283,9 @@
 					  if($verifica){
 						$busca = mysqli_num_rows($verifica);
 					  if(($busca) == '0'){
-						$insereDados = mysqli_query($conn, "INSERT INTO status (consultorio , nome , data_marcada , pagamento , valor_servico , entrada , status)
-						VALUES ('$consultorio' , '$nome' , '$data_marcada' , '$pagamento' , '$valor_servico' , '$entrada' , '$status')");  
-						echo "<script> alert('Informações enviadas com sucesso.'); window.location='consultorio.php'</script>";
+						$insereDados = mysqli_query($conn, "INSERT INTO status (consultorio , nome , data_marcada , modalidade , pagamento , parcelas , valor_servico , entrada , status)
+						VALUES ('$consultorio' , '$nome' , '$data_marcada' , '$modalidade' , '$pagamento' , '$parcelas' , '$valor_servico' , '$entrada' , '$status')");  
+						//echo "<script> alert('Informações enviadas com sucesso.'); window.location='consultorio.php'</script>";
 					  }else{
 						echo "<script> alert('Dado repedito. Não é permitido fazer a mesma transferência.'); window.location='consultorio.php'</script>";				  
 					  }
